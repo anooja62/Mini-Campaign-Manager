@@ -10,6 +10,9 @@ export default function CampaignModal({ isOpen, onClose, onSubmit }) {
     type: '',
   });
 
+  // Get today's date in YYYY-MM-DD format for the min attribute
+  const today = new Date().toISOString().split('T')[0];
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -34,6 +37,7 @@ export default function CampaignModal({ isOpen, onClose, onSubmit }) {
             onChange={handleChange}
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="e.g. Spring Sale"
+            required
           />
         </div>
 
@@ -46,6 +50,8 @@ export default function CampaignModal({ isOpen, onClose, onSubmit }) {
               value={form.startDate}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              min={today}  // <-- disable past dates here
+              required
             />
           </div>
           <div className="w-1/2">
@@ -56,6 +62,8 @@ export default function CampaignModal({ isOpen, onClose, onSubmit }) {
               value={form.endDate}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              min={form.startDate || today}  // <-- endDate can't be before startDate
+              required
             />
           </div>
         </div>
@@ -69,6 +77,7 @@ export default function CampaignModal({ isOpen, onClose, onSubmit }) {
             rows={3}
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Describe your target audience"
+            required
           />
         </div>
 
@@ -79,6 +88,7 @@ export default function CampaignModal({ isOpen, onClose, onSubmit }) {
             value={form.type}
             onChange={handleChange}
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
           >
             <option value="">Select Type</option>
             <option value="Email">Email</option>
