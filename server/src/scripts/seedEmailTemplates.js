@@ -73,7 +73,7 @@ async function seedEmailTemplates() {
   try {
     await mongoose.connect(MONGO_URI);
 
-    await EmailTemplate.deleteMany(); // Clear old templates
+    await EmailTemplate.deleteMany(); 
     await EmailTemplate.insertMany(templates);
 
     console.log("✅ Inserted 10 marketing email templates.");

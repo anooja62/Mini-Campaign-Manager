@@ -4,7 +4,7 @@ import Dashboard from './pages/Dashboard';
 
 export default function App() {
   return (
-    <div>
+    <div className="font-sans">
       <Router>
         <Routes>
           <Route path="/" element={<Dashboard />} />

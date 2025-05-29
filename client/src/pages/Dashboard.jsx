@@ -4,6 +4,8 @@ import axios from "axios";
 import CampaignList from "../components/CampaignList";
 import { Plus } from "lucide-react";
 import CampaignTracker from "../components/CampaignTracker";
+import WebhookEventTable from "../components/WebhookEventTable";
+import CampaignSummary from "../components/CampaignSummary";
 
 export default function Dashboard() {
   const [campaigns, setCampaigns] = useState([]);
@@ -64,30 +66,35 @@ export default function Dashboard() {
         </div>
         <div className="max-w-5xl mx-auto">
           <div className="flex justify-between items-center mb-6">
-          <div className="flex flex-col gap-2 mb-6">
-  <h1 className="text-4xl font-extrabold text-black">📊 Campaign Command Center</h1>
-  <p className="text-sm text-gray-600 font-light">
-    All-in-one dashboard to launch, track & optimize your marketing campaigns.
-  </p>
-</div>
+            <div className="flex flex-col gap-2 mb-6">
+              <h1 className="text-4xl font-extrabold text-black">
+                📊 Campaign Command Center
+              </h1>
+              <p className="text-sm text-gray-600 font-light">
+                All-in-one dashboard to launch, track & optimize your marketing
+                campaigns.
+              </p>
+            </div>
 
-<button
-  onClick={() => setIsModalOpen(true)}
-  className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-5 py-2.5 rounded-full shadow-md hover:from-orange-600 hover:to-yellow-600 transition-all duration-300 font-semibold"
->
-  <Plus className="w-5 h-5" />
-  New Campaign
-</button>
-
-
-
-
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-5 py-2.5 rounded-full shadow-md hover:from-orange-600 hover:to-yellow-600 transition-all duration-300 font-semibold"
+            >
+              <Plus className="w-5 h-5" />
+              New Campaign
+            </button>
           </div>
 
           <div className="rounded-xl shadow p-4 border border-gray-200">
             <CampaignList campaigns={campaigns} />
           </div>
           {/* <CampaignTracker campaigns={campaigns} /> */}
+          <div className="mt-10">
+          <WebhookEventTable />
+          </div>
+          <div className="mt-10">
+          <CampaignSummary campaigns={campaigns} />
+          </div>
         </div>
 
         {/* Modal */}

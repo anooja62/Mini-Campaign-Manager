@@ -47,16 +47,15 @@ export const launchCampaignEmail = async (req, res) => {
 
 
 export const handleSendgridEvents = (req, res) => {
-  const events = req.body; // Array of event objects
+  const events = req.body; 
 
   events.forEach(event => {
     const { email, event: eventType, timestamp, sg_message_id } = event;
 
-    // Log or update email status in your database
+   
     console.log(`Email: ${email}, Event: ${eventType}, Time: ${timestamp}, Message ID: ${sg_message_id}`);
 
-    // You might want to store this in a collection for tracking
-    // e.g., saveStatusUpdate({ email, eventType, timestamp, messageId: sg_message_id });
+   
   });
 
   res.status(200).send('OK');
