@@ -7,7 +7,7 @@ export default function Dashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const fetchCampaigns = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/api/campaigns');
+      const res = await axios.get('http://localhost:8000/api/campaigns/');
 console.log('✌️res --->', res.data);
       setCampaigns(res.data.campaigns);
     } catch (err) {

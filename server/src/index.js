@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import app from './app.js';
 import connectDB from './config/db.js';
+import './cron/sendCampaigns.js';
 
 dotenv.config(); 
 

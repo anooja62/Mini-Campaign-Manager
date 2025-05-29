@@ -29,12 +29,36 @@ export const getAllCampaigns = async (req, res) => {
 
 export const launchCampaignEmail = async (req, res) => {
   const { to, subject, htmlContent } = req.body;
+  console.log('Email TO:', req.body.to);
 
   try {
-    await sendCampaignEmail(to, subject, htmlContent);
-    return res.status(200).json({ message: 'Email sent!' });
+    const recipients = Array.isArray(to) ? to : [to];
+    
+    for (const email of recipients) {
+      await sendCampaignEmail(email, subject, htmlContent);
+    }
+
+    return res.status(200).json({ message: 'Emails sent!' });
   } catch (err) {
     console.error('SendGrid error:', err);
     return res.status(500).json({ message: 'Failed to send email' });
   }
 };
+
+
+export const handleSendgridEvents = (req, res) => {
+  const events = req.body; // Array of event objects
+
+  events.forEach(event => {
+    const { email, event: eventType, timestamp, sg_message_id } = event;
+
+    // Log or update email status in your database
+    console.log(`Email: ${email}, Event: ${eventType}, Time: ${timestamp}, Message ID: ${sg_message_id}`);
+
+    // You might want to store this in a collection for tracking
+    // e.g., saveStatusUpdate({ email, eventType, timestamp, messageId: sg_message_id });
+  });
+
+  res.status(200).send('OK');
+};
+
