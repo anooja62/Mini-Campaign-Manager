@@ -7,4 +7,5 @@ router.post('/create', createCampaign);
 router.get('/', getAllCampaigns);
 router.post('/launch', launchCampaignEmail);
 router.post('/events', handleSendgridEvents);
+
 export default router;

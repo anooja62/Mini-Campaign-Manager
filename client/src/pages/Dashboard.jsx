@@ -27,6 +27,9 @@ console.log('✌️res --->', res.data);
       const res = await axios.post('http://localhost:8000/api/campaigns/create', formData);
   
       alert('✅ Campaign created successfully!');
+      await fetchCampaigns(); // after success
+setIsModalOpen(false);  // close the modal
+
       console.log('Campaign created:', res.data.campaign);
       // Optional: refresh campaigns list, reset form, etc.
     } catch (err) {

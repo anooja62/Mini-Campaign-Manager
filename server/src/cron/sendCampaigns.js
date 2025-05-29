@@ -8,17 +8,25 @@ const sendCampaignEmails = async () => {
   const now = new Date();
 
   try {
-    // Find campaigns active now and not completed
+    // Find active campaigns
     const campaigns = await Campaign.find({
       startDate: { $lte: now },
       endDate: { $gte: now },
-      status: 'pending' // or your own field to track sending status
+      status: { $ne: 'completed' } // still ongoing
     });
 
     for (const campaign of campaigns) {
-      const template = await EmailTemplate.findById(campaign.templateId);
+      const campaignDay =
+        Math.floor((now - new Date(campaign.startDate)) / (1000 * 60 * 60 * 24)) + 1;
+
+      // Get template for this day and campaign type
+      const template = await EmailTemplate.findOne({
+        category: campaign.type, // 'promotion', etc.
+        day: campaignDay
+      });
+
       if (!template) {
-        console.log(`Template not found for campaign ${campaign._id}`);
+        console.log(`No template found for ${campaign.name} on day ${campaignDay}`);
         continue;
       }
 
@@ -26,22 +34,30 @@ const sendCampaignEmails = async () => {
       const emails = users.map(u => u.email);
 
       for (const email of emails) {
-        await sendCampaignEmail(email, template.subject, template.htmlContent);
+        await sendCampaignEmail(email, template.subject, template.body);
       }
 
-      // Mark campaign as completed or sent
-      campaign.status = 'sent';
-      await campaign.save();
+      console.log(
+        `✅ Sent Day ${campaignDay} campaign "${campaign.name}" to ${emails.length} users.`
+      );
+    
 
-      console.log(`Sent campaign emails for ${campaign.name} to ${emails.length} users.`);
+      // Optional: set completed if it's the last day
+      if (now.toDateString() === new Date(campaign.endDate).toDateString()) {
+        campaign.status = 'completed';
+        await campaign.save();
+      }
     }
   } catch (err) {
-    console.error('Error sending campaign emails:', err);
+    console.error('❌ Error sending campaign emails:', err);
   }
 };
 
-// Schedule to run every hour (you can adjust cron expression)
-cron.schedule('0 * * * *', () => {
-  console.log('Running campaign email cron job at', new Date());
+ //Run every day at 9 AM
+cron.schedule('0 9 * * *', () => {
+  console.log('🚀 Running daily campaign cron at', new Date());
   sendCampaignEmails();
 });
+
+
+

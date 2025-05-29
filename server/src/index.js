@@ -1,10 +1,9 @@
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
-import app from './app.js';
 import connectDB from './config/db.js';
-import './cron/sendCampaigns.js';
+import app from './app.js';       
+import './cron/sendCampaigns.js'; 
 
-dotenv.config(); 
+dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 
