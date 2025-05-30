@@ -123,3 +123,8 @@ npm run dev
 * 📎 **File Attachments to Campaigns**
 
 
+## 📸 Screenshot
+
+Here's a preview of the dashboard UI:
+
+![Dashboard Screenshot](./assets/images/dashboard-ui.png)
