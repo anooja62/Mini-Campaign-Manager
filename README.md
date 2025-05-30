@@ -73,15 +73,15 @@ npm run dev
 
 ### 3. Setup Frontend
 
-bash
-cd client
-npm install
+```bash
+```cd client
+```npm install
 
 
 Start frontend:
 
 
-npm run dev
+```npm run dev
 
 
 ---
