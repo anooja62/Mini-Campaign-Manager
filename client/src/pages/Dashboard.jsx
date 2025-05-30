@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import CampaignModal from "../components/CampaignModal";
-import axios from "axios";
+import axiosInstance from "../utils/axiosInstance";
 import CampaignList from "../components/CampaignList";
 import { Plus } from "lucide-react";
-import CampaignTracker from "../components/CampaignTracker";
+
 import WebhookEventTable from "../components/WebhookEventTable";
 import CampaignSummary from "../components/CampaignSummary";
 
@@ -13,7 +13,7 @@ export default function Dashboard() {
 
   const fetchCampaigns = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/campaigns/");
+      const res = await axiosInstance.get("/campaigns/");
       setCampaigns(res.data.campaigns);
     } catch (err) {
       console.error("Failed to fetch campaigns:", err);
@@ -31,10 +31,7 @@ export default function Dashboard() {
     }
 
     try {
-      const res = await axios.post(
-        "http://localhost:8000/api/campaigns/create",
-        formData
-      );
+      const res = await axiosInstance.post("/campaigns/create", formData);
       alert("✅ Campaign created successfully!");
       console.log("ress", res.data);
       await fetchCampaigns();
@@ -50,9 +47,8 @@ export default function Dashboard() {
 
   return (
     <div className="relative min-h-screen font-sans">
-      {/* Background Image */}
+  
 
-      {/* Main Content */}
       <div className="relative p-6 min-h-screen">
         <div
           className="fixed inset-0 -z-10 flex justify-center items-center"
@@ -88,7 +84,7 @@ export default function Dashboard() {
           <div className="rounded-xl shadow p-4 border border-gray-200">
             <CampaignList campaigns={campaigns} />
           </div>
-          {/* <CampaignTracker campaigns={campaigns} /> */}
+      
           <div className="mt-10">
           <WebhookEventTable />
           </div>

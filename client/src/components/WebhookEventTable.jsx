@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosInstance';
 
 export default function WebhookEventTable() {
   const [events, setEvents] = useState([]);
@@ -8,7 +8,7 @@ export default function WebhookEventTable() {
   const fetchEvents = async () => {
     try {
       const query = new URLSearchParams(filter).toString();
-      const res = await axios.get(`http://localhost:8000/api/webhooks?${query}`);
+      const res = await axiosInstance.get(`/webhooks?${query}`);
       setEvents(res.data.events);
 console.log('✌️res.data.events --->', res.data.events);
     } catch (err) {

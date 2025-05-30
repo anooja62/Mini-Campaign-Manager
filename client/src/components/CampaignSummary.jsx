@@ -10,7 +10,7 @@ import {
     Clock,
     Signal,
     Tag,
-  } from 'lucide-react'; // npm install lucide-react
+  } from 'lucide-react'; 
   
   export default function CampaignSummary({ campaigns }) {
     const getStatus = (startDate, endDate) => {

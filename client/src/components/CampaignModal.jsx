@@ -10,7 +10,7 @@ export default function CampaignModal({ isOpen, onClose, onSubmit }) {
     type: '',
   });
 
-  // Get today's date in YYYY-MM-DD format for the min attribute
+ 
   const today = new Date().toISOString().split('T')[0];
 
   const handleChange = (e) => {
@@ -50,7 +50,7 @@ export default function CampaignModal({ isOpen, onClose, onSubmit }) {
               value={form.startDate}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              min={today}  // <-- disable past dates here
+              min={today} 
               required
             />
           </div>
@@ -62,7 +62,7 @@ export default function CampaignModal({ isOpen, onClose, onSubmit }) {
               value={form.endDate}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              min={form.startDate || today}  // <-- endDate can't be before startDate
+              min={form.startDate || today}  
               required
             />
           </div>
